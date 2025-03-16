@@ -21,11 +21,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build EXE with PyInstaller
-        run: |
-          pyinstaller --onefile --icon=picture.ico
-            --add-data="templates;templates" ^
-            --add-data="static;static" ^
-            --add-data="generator.db;generator.db"
+        run: pyinstaller --onefile --icon=picture.ico --add-data="templates;templates" --add-data="static;static" --add-data="generator.db;generator.db"
 
       - name: Upload EXE artifact
         uses: actions/upload-artifact@v4
