@@ -27,7 +27,7 @@ jobs:
       --add-data="templates:templates" ^
       --add-data="static:static" ^
       --add-data="generator.db:generator.db" ^
-      main.py  # Замініть на вашу головну програму, якщо вона має іншу назву
+      main.py 
 
 
       - name: Upload EXE artifact
