@@ -3,33 +3,36 @@ name: Deploy and Run Tests
 on:
   push:
     branches:
-      - main  # Заміни на вашу основну гілку, якщо вона має іншу назву
+      - main
   pull_request:
     branches:
-      - main  # Заміни на вашу основну гілку
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Ви можете використовувати інші платформи, якщо потрібно
+    runs-on: ubuntu-latest
 
     steps:
-    # 1. Клонування репозиторію
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # 2. Налаштування Python
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.8'  # Заміни на потрібну версію Python
+        python-version: '3.8'
 
-    # 3. Встановлення залежностей
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # 4. Запуск тестів
+    - name: Set up Xvfb
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb
+        export DISPLAY=:99.0
+        nohup Xvfb :99 -screen 0 1280x1024x24 &
+
     - name: Run tests
       run: |
-        python -m unittest discover -s tests  # Якщо ваші тести знаходяться в папці tests
+        python -m unittest discover -s tests
